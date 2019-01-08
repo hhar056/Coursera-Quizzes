@@ -15,5 +15,7 @@ library("xlsxjars")
 library("xlsx")
 
 
-download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx","Natural Gas")
-dat<-read.xlsx("Natural Gas.xlsx",startRow=18,endRow=23,)
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx","C3Q1/Natural Gas.xlsx")
+dat<-read.xlsx("C3Q1/Natural Gas.xlsx",sheetIndex=1,rowIndex=18:23,colIndex=7:15)
+head(dat)
+sum(dat$Zip*dat$Ext,na.rm=T)
