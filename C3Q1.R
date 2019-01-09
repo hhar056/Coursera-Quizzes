@@ -12,11 +12,12 @@ install.packages("rJava")
 install.packages("xlsxjars")
 install.packages("xlsx")
 install.packages("XML")
+install.packages("data.table")
 library("rJava")
 library("xlsxjars")
 library("xlsx")
 library("XML")
-
+library("data.table")
 
 download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FDATA.gov_NGAP.xlsx","Natural Gas.xlsx", mode="wb")
 dat<-read.xlsx("Natural Gas.xlsx",sheetIndex=1,rowIndex=18:23,colIndex=7:15)
@@ -35,10 +36,17 @@ topNode[[1]][[1]]
 
 els<-getNodeSet(topNode,"//row/row")
 els
-test<-xmlSApply(els,extraFun)
+xmlSApply(els,function(x)xmlSApply(x,xmlValue))
 class(test)
 head(test)
+t(test)
+resultDF<-data.frame(t(test))
+head(resultDF)
+resultDF$zipcode<-as.numeric(as.character(resultDF$zipcode))
+head(resultDF)
+sum(as.numeric(resultDF$zipcode==21231))
+resultDF$zipcode    
 
-extraFun<-function(x){
-    xmlSApply(x,xmlValue)
-}
+
+download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Fss06pid.csv", "Communities.csv",mode="wb")
+?fread
