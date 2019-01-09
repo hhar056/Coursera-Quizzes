@@ -1,3 +1,5 @@
+setwd("Coursera Quizzes")
+
 install.packages("RMySQL")
 library("RMySQL")
 
@@ -66,5 +68,14 @@ nchar(htmlCode[100])
 ##Q5
 download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fwksst8110.for","Fortran.for",mode="wb")
 
-fortran<-read.fortran("Fortran.for",format=c("1A9","8F4.1"),skip=4, sep="\t")
+fortran<-read.fortran("Fortran.for", format=c("1A10","1A5","2A4","1A5","2A4","1A5","2A4","1A5","2A4"),skip=3)
 head(fortran)
+
+cleanedFortran<-fortran[,c(1,3,4,6,7,9,10,12,13)]
+head(cleanedFortran)
+names(cleanedFortran)<-cleanedFortran[1,]
+cleanedFortran<-cleanedFortran[-1,]
+cleanedFortran[,2:9]<-as.numeric(as.character(cleanedFortran[,2:9]))
+head(cleanedFortran)
+sum(as.numeric(cleanedFortran[,4]))
+sum(as.numeric(cleanedFortran[,5]))
